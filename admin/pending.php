@@ -74,7 +74,7 @@
                     <b class="logo-icon p-l-10">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
-                        <img src="assets/images/my-ride-logo.png" alt="homepage" class="light-logo" />
+                        <img src="assets/images/logoDriveIn.png" alt="homepage" width="250px" class="light-logo" />
 
                     </b>
                     <!--End Logo icon -->
@@ -303,7 +303,7 @@
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
     <div class="page-wrapper">
-        <h1 style="text-align: center">Pending Booking Requests</h1>
+        <h1 style="margin-top: 20px; text-align: center">Pending Booking Requests</h1>
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
@@ -368,7 +368,7 @@
                                 <td style="vertical-align: middle"><?php echo $hire_type?></td>
                                 <th scope="row"><img title="<?php echo 'ID: '.$cid.': '.$car['brand'].' - '.$car['cname'];?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 100px"></th>
                                 <th scope="row"><img title="<?php echo 'ID: '.$did.' - Name: '.$driver['dname'];?>" class="img-fluid" src="<?php echo $dpic?>" style="width: 100px"></th>
-                                <td style="vertical-align: middle"><?php echo '₹ '.$cost.' Rupees'?></td>
+                                <td style="vertical-align: middle"><?php echo 'Rp '.$cost.''?></td>
                                 <td style="vertical-align: middle">
                                     <!--                                    <button class="btn-outline-info" placeholder="Some" value="car" name="book" type="button" data-toggle="modal" data-target="#staticBackdrop">Approve this Ride</button>-->
                                     <form method="post" action="functionalities/approve.php" id="approve-form<?php echo $bid?>">

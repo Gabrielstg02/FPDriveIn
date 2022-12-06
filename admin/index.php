@@ -48,12 +48,12 @@
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
-<div class="preloader">
+<!-- <div class="preloader">
     <div class="lds-ripple">
         <div class="lds-pos"></div>
         <div class="lds-pos"></div>
     </div>
-</div>
+</div> -->
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
@@ -74,7 +74,7 @@
                     <b class="logo-icon p-l-10">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
-                        <img src="assets/images/my-ride-logo.png" alt="homepage" class="light-logo" />
+                        <img src="assets/images/logoDriveIn.png" alt="homepage" width="250px" class="light-logo" />
 
                     </b>
                     <!--End Logo icon -->
@@ -457,6 +457,7 @@
                                 <th scope="col">Cost</th>
                                 <th scope="col" width="10%">Approve Button</th>
                                 <th scope="col">Reject Button</th>
+                                <th scope="col" width="10%">Bukti Transfer</th>
                             </tr>
                             </thead>
                             <?php
@@ -471,12 +472,15 @@
                             $driver_qr=mysqli_query($conn,"select dname,pic from driver where did=$did");
                             $user_qr=mysqli_query($conn,"select name,pic from user where uid=$uid");
                             $car_qr=mysqli_query($conn,"select brand,cname,pic from car where cid=$cid");
+                            $booking_qr=mysqli_query($conn,"select paymentfile from booking where bid=$bid");
+                            $booking=mysqli_fetch_array($booking_qr);
                             $driver=mysqli_fetch_array($driver_qr);
                             $user=mysqli_fetch_array($user_qr);
                             $car=mysqli_fetch_array($car_qr);
                             $dpic=$driver['pic'];
                             $cpic=$car['pic'];
                             $upic='../'.$user['pic'];
+                            $pupic='../'.$booking['paymentfile'];
 //                            var_dump($driver);
 //                            var_dump($user);
 //                            echo $source;
@@ -490,7 +494,7 @@
                                 <td style="vertical-align: middle"><?php echo $hire_type?></td>
                                 <th scope="row"><img title="<?php echo 'ID: '.$cid.': '.$car['brand'].' - '.$car['cname'];?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 100px"></th>
                                 <th scope="row"><img title="<?php echo 'ID: '.$did.' - Name: '.$driver['dname'];?>" class="img-fluid" src="<?php echo $dpic?>" style="width: 100px"></th>
-                                <td style="vertical-align: middle"><?php echo '₹ '.$cost.' Rupees'?></td>
+                                <td style="vertical-align: middle"><?php echo 'Rp '.$cost.' '?></td>
                                 <td style="vertical-align: middle">
                                 <form method="post" action="functionalities/approve.php" id="approve-form<?php echo $bid?>">
                                     <?php $arr = [
@@ -553,6 +557,7 @@
                                         />
                                     </form>
                                 </td>
+                                <th scope="row"><img title="<?php echo 'ID: '.$bid.' - payment: '.$booking['paymentfile'];?>" class="img-fluid" src="<?php echo $pupic?>" style="width: 100px"></th>
                             </tr>
                             <!-- Button trigger modal -->
                             <?php

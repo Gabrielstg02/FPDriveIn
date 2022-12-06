@@ -195,11 +195,11 @@ else{
             </tr>
             <tr>
                 <th scope="row">Fare per Km</th>
-                <td><?php echo $view['farepkm']?> Rupees</td>
+                <td><?php echo $view['farepkm']?> Rupiah</td>
             </tr>
             <tr>
                 <th scope="row">Fare per day</th>
-                <td><?php echo $view['farepd']?> Rupees</td>
+                <td><?php echo $view['farepd']?> Rupiah</td>
             </tr>
 
             </tbody>

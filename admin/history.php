@@ -525,7 +525,7 @@ else{
                                 ?>
                                 </tbody>
                             </table>
-                            <h1 style="text-align: center">Total income: <?php echo $total.' Rupees';?></h1>
+                            <h1 style="text-align: center">Total income: Rp <?php echo $total.'';?></h1>
                         </div>
 
                     </div>

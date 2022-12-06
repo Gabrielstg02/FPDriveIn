@@ -1,54 +1,48 @@
-<?php
-    include ("php/connection.php");
-    if(!isset($_SESSION['driver'])){
-        //        var_dump($_SESSION['admin']);
-                ?>
-                    <script type="text/javascript">
-                        window.location.href = "driver_login.php";
-                    </script>
-                <?php
-            }
-            else{
-        //        var_dump($_SESSION['admin']);
-                if($qr=mysqli_query($conn,"select * from booking where status='Pending'")){
-        
-                }
-                else{
-                    ?><script>alert("Data fetching error")</script> <?php
-                }
-            }
-?>
-
+<?php include('../php/connection.php'); ?>
+<?php if(isset($_SESSION['driver']))
+{
+    ?><script type="text/javascript">
+    window.location.href = "driver_login.php";
+</script>
+    <?php
+} ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>DriveIn</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="manifest" href="site.webmanifest">
-		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Ride | Login</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Bootstrap Link here-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-		<!-- CSS here -->
-            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-            <link rel="stylesheet" href="assets/css/gijgo.css">
-            <link rel="stylesheet" href="assets/css/slicknav.css">
-            <link rel="stylesheet" href="assets/css/animate.min.css">
-            <link rel="stylesheet" href="assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="assets/css/themify-icons.css">
-            <link rel="stylesheet" href="assets/css/slick.css">
-            <link rel="stylesheet" href="assets/css/nice-select.css">
-            <link rel="stylesheet" href="assets/css/style.css">
-            <link rel="stylesheet" href="assets/css/responsive.css">
-   </head>
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <!-- Place favicon.ico in the root directory -->
 
-   <body style="background-color: #a7907b40">
+    <!-- CSS here -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/gijgo.css">
+    <link rel="stylesheet" href="../assets/css/slicknav.css">
+    <link rel="stylesheet" href="../assets/css/animate.min.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/css/slick.css">
+    <link rel="stylesheet" href="../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>.swal-modal {background-color: rgba(255, 255, 255, 0.70);}</style>
+    <style>.swal-overlay {background-image: url("../assets/img/error/success.gif");background-repeat: no-repeat;width: 100%;height: 100%;background-size: cover;background-position: center;}</style>
+</head>
+
+<body style="background-color: #a7907b40">
+
+<body style="background-color: #a7907b40">
        
     <!-- Preloader Start -->
     <!-- <div id="preloader-active">
@@ -89,7 +83,7 @@
                         <div class="col-xl-2 col-lg-2">
                             <!-- header-btn -->
                             <div class="header-btn">
-                                <a href="driver/user_login.php" class="btn btn1 d-none d-lg-block" id="profile">Log In</a>
+                                <a href="driver_login.php" class="btn btn1 d-none d-lg-block" id="profile">Log In</a>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -103,143 +97,10 @@
         <!-- Header End -->
     </header>
 
-    <div>
-                <div class="container-fluid" style="padding-top: 50px;">
-                    <?php
-                    if(mysqli_num_rows($qr)>0){
-                        ?> <h2 style="text-align: center">Pending Booking Requests</h2> <?php
-                    }
-                    else{
-                        ?> <h2 style="text-align: center">No Pending Booking Requests</h2> <?php
-                    }
-                    ?>
-                    <table class="table table-striped center table-warning table-bordered" style="font-size: small;text-align: center;">
-                        <?php
-                        if(mysqli_num_rows($qr)){
-                            ?>
-                            <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" width="10%">User's Photo</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Destination</th>
-                                <th scope="col">Pick up Date</th>
-                                <th scope="col">Drop off Date</th>
-                                <th scope="col">Hire type</th>
-                                <th scope="col" width="1000">Car</th>
-                                <th scope="col">Driver</th>
-                                <th scope="col">Cost</th>
-                                <th scope="col" width="10%">Approve Button</th>
-                                <th scope="col">Reject Button</th>
-                            </tr>
-                            </thead>
-                            <?php
-                        }
-                        ?>
-                        <tbody>
-                        <?php
-                        while ($row=mysqli_fetch_array($qr)){
-                            extract($row);
-//                            var_dump($row);
-                            $bid=$row['bid'];
-                            $driver_qr=mysqli_query($conn,"select dname,pic from driver where did=$did");
-                            $user_qr=mysqli_query($conn,"select name,pic from user where uid=$uid");
-                            $car_qr=mysqli_query($conn,"select brand,cname,pic from car where cid=$cid");
-                            $driver=mysqli_fetch_array($driver_qr);
-                            $user=mysqli_fetch_array($user_qr);
-                            $car=mysqli_fetch_array($car_qr);
-                            $dpic=$driver['pic'];
-                            $cpic=$car['pic'];
-                            $upic='../'.$user['pic'];
-//                            var_dump($driver);
-//                            var_dump($user);
-//                            echo $source;
-                            ?>
-                            <tr>
-                                <th scope="row"><img title="<?php echo 'ID: '.$uid.' - Name: '.$user['name'];?>" class="img-fluid" src="<?php echo $upic?>" style="width: 100px"></th>
-                                <td style="vertical-align: middle"><?php echo $source?></td>
-                                <td style="vertical-align: middle"><?php echo $destination?></td>
-                                <td style="vertical-align: middle"><?php echo $startdate?></td>
-                                <td style="vertical-align: middle"><?php echo $enddate?></td>
-                                <td style="vertical-align: middle"><?php echo $hire_type?></td>
-                                <th scope="row"><img title="<?php echo 'ID: '.$cid.': '.$car['brand'].' - '.$car['cname'];?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 100px"></th>
-                                <th scope="row"><img title="<?php echo 'ID: '.$did.' - Name: '.$driver['dname'];?>" class="img-fluid" src="<?php echo $dpic?>" style="width: 100px"></th>
-                                <td style="vertical-align: middle"><?php echo '₹ '.$cost.' Rupees'?></td>
-                                <td style="vertical-align: middle">
-                                <form method="post" action="functionalities/approve.php" id="approve-form<?php echo $bid?>">
-                                    <?php $arr = [
-                                        'bid' => $bid
-                                    ];
-                                    ?>
-                                    <input type="hidden" name="data" value="<?php echo htmlentities(serialize($arr)); ?>">
-                                    <input onclick="
-                                            swal('Approve Ride','Are U sure? you want to approve this ride','info',{buttons: {
-                                            cancel: 'No\, Don\'t Approve',
-
-                                            catch: {
-                                            text: 'Yes\, Approve Now',
-                                            value: 'catch',
-                                            },
-                                            },closeOnClickOutside: false,
-                                            },).then((value) => {
-                                            switch (value) {
-                                            case 'catch':
-                                            swal('Approved', 'Ride approved successfully', 'success');
-                                            $('#approve-form<?php echo $bid?>').submit();
-                                            break;
-
-                                            default:
-                                            swal('Ride not approved','','warning');
-                                            }
-                                            });"
-                                           class="btn btn-primary" value="<?php echo 'Approve this booking';?>"
-                                    />
-                                </form>
-                                </td>
-                                <td style="vertical-align: middle">
-                                    <form method="post" action="functionalities/reject.php" id="reject-form<?php echo $bid?>">
-                                        <?php $arr = [
-                                            'bid' => $bid
-                                        ];
-                                        ?>
-                                        <input type="hidden" name="data" value="<?php echo htmlentities(serialize($arr)); ?>">
-                                        <input onclick="
-                                                swal('Reject Ride','Are U sure? you want to reject this ride','info',{buttons: {
-                                                cancel: 'No\, Don\'t Reject',
-
-                                                catch: {
-                                                text: 'Yes\, Reject Now',
-                                                value: 'catch',
-                                                },
-                                                },closeOnClickOutside: false,
-                                                },).then((value) => {
-                                                switch (value) {
-                                                case 'catch':
-                                                swal('Rejected', 'Ride rejected successfully', 'error');
-                                                $('#reject-form<?php echo $bid?>').submit();
-                                                break;
-
-                                                default:
-                                                swal('Ride not rejected','','warning');
-                                                }
-                                                });"
-                                               class="btn btn-primary" value="<?php echo 'Reject this booking';?>"
-                                        />
-                                    </form>
-                                </td>
-                            </tr>
-                            <!-- Button trigger modal -->
-                            <?php
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
 
 
-    <!-- Footer Start-->
-   <div class="footer-area theme-bg footer-padding">
+<!-- Footer Start-->
+<div class="footer-area theme-bg footer-padding">
            <div class="container">
                <div class="row d-flex justify-content-between">
                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
@@ -314,43 +175,63 @@
        </div>
        <!-- Footer End-->
    </footer>
-   <!-- JS here -->
-	
-		<!-- All JS Custom Plugins Link Here here -->
-        <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-		
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="./assets/js/popper.min.js"></script>
-        <script src="./assets/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="./assets/js/jquery.slicknav.min.js"></script>
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="./assets/js/owl.carousel.min.js"></script>
-        <script src="./assets/js/slick.min.js"></script>
-        <!-- Date Picker -->
-        <script src="./assets/js/gijgo.min.js"></script>
-		<!-- One Page, Animated-HeadLin -->
-        <script src="./assets/js/wow.min.js"></script>
-		<script src="./assets/js/animated.headline.js"></script>
-        <script src="./assets/js/jquery.magnific-popup.js"></script>
+<!-- JS here -->
 
-		<!-- Scrollup, nice-select, sticky -->
-        <script src="./assets/js/jquery.scrollUp.min.js"></script>
-        <script src="./assets/js/jquery.nice-select.min.js"></script>
-		<script src="./assets/js/jquery.sticky.js"></script>
-        
-        <!-- contact js -->
-        <script src="./assets/js/contact.js"></script>
-        <script src="./assets/js/jquery.form.js"></script>
-        <script src="./assets/js/jquery.validate.min.js"></script>
-        <script src="./assets/js/mail-script.js"></script>
-        <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-        
-		<!-- Jquery Plugins, main Jquery -->	
-        <script src="./assets/js/plugins.js"></script>
-        <script src="./assets/js/main.js"></script>
-        
-    </body>
+<!-- All JS Custom Plugins Link Here here -->
+<script src="../assets/js/vendor/modernizr-3.5.0.min.js"></script>
+
+<!-- Jquery, Popper, Bootstrap -->
+<script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="../assets/js/popper.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="../assets/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<script src="../assets/js/slick.min.js"></script>
+<!-- Date Picker -->
+<script src="../assets/js/gijgo.min.js"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="../assets/js/wow.min.js"></script>
+<script src="../assets/js/animated.headline.js"></script>
+
+<!-- Scrollup, nice-select, sticky -->
+<script src="../assets/js/jquery.scrollUp.min.js"></script>
+<script src="../assets/js/jquery.nice-select.min.js"></script>
+<script src="../assets/js/jquery.sticky.js"></script>
+<script src="../assets/js/jquery.magnific-popup.js"></script>
+
+<!-- contact js -->
+<script src="../assets/js/contact.js"></script>
+<script src="../assets/js/jquery.form.js"></script>
+<script src="../assets/js/jquery.validate.min.js"></script>
+<script src="../assets/js/mail-script.js"></script>
+<script src="../assets/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="../assets/js/plugins.js"></script>
+<script src="../assets/js/main.js"></script>
+
+<script>
+    $('#datepicker').datepicker({
+        iconsLibrary: 'fontawesome',
+        disableDaysOfWeek: [0, 0],
+        //     icons: {
+        //      rightIcon: '<span class="fa fa-caret-down"></span>'
+        //  }
+    });
+    $('#datepicker2').datepicker({
+        iconsLibrary: 'fontawesome',
+        icons: {
+            rightIcon: '<span class="fa fa-caret-down"></span>'
+        }
+
+    });
+    var timepicker = $('#timepicker').timepicker({
+        format: 'HH.MM'
+    });
+</script>
+</body>
 </html>

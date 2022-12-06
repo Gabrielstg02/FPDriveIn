@@ -1,12 +1,12 @@
 <?php
 include ("php/connection.php");
-if(isset($_SESSION['user'])){
+if(isset($_SESSION['driver'])){
     ?>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function(){
         // Change text of input button
-        $("#profile").attr("href", "user/profile.php");
+        $("#profile").attr("href", "profile.php");
 
         // Change text of button element
         $("#profile").html("My Profile");
@@ -69,7 +69,7 @@ if(isset($_SESSION['user'])){
                         <!-- logo -->
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo">
-                               <a href="index.php"><img src="assets/img/logo/logoDriveIn.png" alt=""></a>
+                               <a href="index.php"><img src="assets/img/logo/logoDriveIn.png" alt="" ></a>
                             </div>
                         </div>
                     <div class="col-xl-8 col-lg-8">
@@ -86,7 +86,7 @@ if(isset($_SESSION['user'])){
                         <div class="col-xl-2 col-lg-2">
                             <!-- header-btn -->
                             <div class="header-btn">
-                                <a href="driver/user_login.php" class="btn btn1 d-none d-lg-block" id="profile">Log In</a>
+                                <a href="driver_login.php" class="btn btn1 d-none d-lg-block" id="profile">Log In</a>
                             </div>
                         </div>
                         <!-- Mobile Menu -->

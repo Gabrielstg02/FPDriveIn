@@ -70,7 +70,7 @@
                     <b class="logo-icon p-l-10">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
-                        <img src="assets/images/my-ride-logo.png" alt="homepage" class="light-logo" />
+                        <img src="assets/images/logoDriveIn.png" alt="homepage" width="250px" class="light-logo" />
 
                     </b>
                     <!--End Logo icon -->
@@ -299,7 +299,7 @@
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
     <div class="page-wrapper">
-        <h1 style="text-align: center">Add Routes</h1>
+        <h1 style="margin-top: 20px; text-align: center">Add Routes</h1>
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->

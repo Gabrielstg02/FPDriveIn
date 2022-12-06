@@ -24,9 +24,11 @@ $imgpath='../'.$pic;
 $pending_qr=mysqli_query($conn,"select * from booking where uid=$uid and status='pending'");
 $approved_qr=mysqli_query($conn,"select * from booking where uid=$uid and status='approved'");
 $rejected_qr=mysqli_query($conn,"select * from booking where uid=$uid and status='rejected'");
+$completed_qr=mysqli_query($conn,"select * from booking where uid=$uid and status='completed'");
 $pending_count = mysqli_num_rows($pending_qr);
 $approved_count = mysqli_num_rows($approved_qr);
 $rejected_count = mysqli_num_rows($rejected_qr);
+$complete_count = mysqli_num_rows($completed_qr);
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -88,7 +90,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
 <body style="background-color: #a7907b40">
 
 <!-- Preloader Start -->
-<div id="preloader-active">
+<!-- <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
             <div class="preloader-circle"></div>
@@ -97,7 +99,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Preloader Start -->
 
 <header>
@@ -233,7 +235,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
         </center>
         <div class="container-fluid center">
             <?php
-            if($pending_count==0 and $approved_count==0 and $rejected_count==0){
+            if($pending_count==0 and $approved_count==0 and $rejected_count==0 and $complete_count==0){
                 ?><h1 style="text-align: center;font-family: 'Lato', sans-serif;font-size: 50px;font-weight: 700;color: #48423d">No Booking record found</h1><?php
             }
             else{
@@ -254,12 +256,14 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     <tr>
                                         <th scope="col">Car</th>
                                         <th scope="col">Driver</th>
+                                        <th scope="col">Nama Driver</th>
                                         <th scope="col">Source</th>
                                         <th scope="col">Destination</th>
                                         <th scope="col">Pick up Date</th>
                                         <th scope="col">Drop off Date</th>
                                         <th scope="col">Hire type</th>
                                         <th scope="col" width="10%">Cost</th>
+                                        <th scope="col">Nomor Driver</th>
                                         <th scope="col" width="10%">Cancel Button</th>
                                     </tr>
                                     </thead>
@@ -271,7 +275,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                 while ($row=mysqli_fetch_array($pending_qr)){
                                     extract($row);
 //                            var_dump($row);
-                                    $driver_qr=mysqli_query($conn,"select dname,pic from driver where did=$did");
+                                    $driver_qr=mysqli_query($conn,"select dname,pic, phno from driver where did=$did");
                                     $user_qr=mysqli_query($conn,"select name,pic from user where uid=$uid");
                                     $car_qr=mysqli_query($conn,"select brand,cname,pic from car where cid=$cid");
                                     $driver=mysqli_fetch_array($driver_qr);
@@ -282,6 +286,8 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     $startD=date("d/m/y",strtotime($startdate));
                                     $endD=date("d/m/y",strtotime($enddate));
                                     $mode='';
+                                    $phno=$driver['phno'];
+                                    $dname=$driver['dname'];
                                     if($hire_type=='day'){
                                         $mode='Full Day';
                                     }
@@ -295,12 +301,14 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     <tr>
                                         <th scope="row"><img title="<?php echo $car['brand'].': '.$car['cname']?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 200px"></th>
                                         <th scope="row"><img title="<?php echo $driver['dname']?>" class="img-fluid rounded-circle" src="<?php echo $dpic?>" style="width: 100px"></th>
+                                        <td style="vertical-align: middle"><?php echo $dname?></td>
                                         <td style="vertical-align: middle"><?php echo $source?></td>
                                         <td style="vertical-align: middle"><?php echo $destination?></td>
                                         <td style="vertical-align: middle"><?php echo $startD?></td>
                                         <td style="vertical-align: middle"><?php echo $endD?></td>
                                         <td style="vertical-align: middle"><?php echo $mode?></td>
-                                        <td style="vertical-align: middle"><?php echo '₹ '.$cost?></td>
+                                        <td style="vertical-align: middle"><?php echo 'Rp '.$cost?></td>
+                                        <td style="vertical-align: middle"><?php echo $phno?></td>
                                         <td style="vertical-align: middle">
 <!--                                            <button class="btn-outline-info" placeholder="Some" value="car" name="book" type="button" data-toggle="modal" data-target="#staticBackdrop">Cancel this Ride</button>-->
                                             <form method="post" action="cancel.php" id="cancel-form<?php echo $bid?>">
@@ -333,6 +341,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                                 />
                                             </form>
                                         </td>
+                                        
                                     </tr>
                                     <!-- Button trigger modal -->
                                     <?php
@@ -363,12 +372,16 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     <tr>
                                         <th scope="col">Car</th>
                                         <th scope="col">Driver</th>
+                                        <th scope="col">Nama Driver</th>
                                         <th scope="col">Source</th>
                                         <th scope="col">Destination</th>
                                         <th scope="col">Pick up Date</th>
                                         <th scope="col">Drop off Date</th>
                                         <th scope="col">Hire type</th>
                                         <th scope="col">Cost</th>
+                                        <th scope="col">Nomor Driver</th>
+                                        <th scope="col">Tombol Selesaikan</th>
+                                        <th scope="col">Tombol Cancel</th>
                                     </tr>
                                     </thead>
                                     <?php
@@ -379,7 +392,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                 while ($row=mysqli_fetch_array($approved_qr)){
                                     extract($row);
 //                            var_dump($row);
-                                    $driver_qr=mysqli_query($conn,"select dname,pic from driver where did=$did");
+                                    $driver_qr=mysqli_query($conn,"select dname,pic, phno from driver where did=$did");
                                     $user_qr=mysqli_query($conn,"select name,pic from user where uid=$uid");
                                     $car_qr=mysqli_query($conn,"select brand,cname,pic from car where cid=$cid");
                                     $driver=mysqli_fetch_array($driver_qr);
@@ -390,6 +403,8 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     $startD=date("d/m/y",strtotime($startdate));
                                     $endD=date("d/m/y",strtotime($enddate));
                                     $mode='';
+                                    $phno=$driver['phno'];
+                                    $dname=$driver['dname'];
                                     if($hire_type=='day'){
                                         $mode='Full Day';
                                     }
@@ -403,12 +418,81 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     <tr>
                                         <th scope="row"><img title="<?php echo $car['brand'].': '.$car['cname']?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 200px"></th>
                                         <th scope="row"><img title="<?php echo $driver['dname']?>" class="img-fluid rounded-circle" src="<?php echo $dpic?>" style="width: 100px"></th>
+                                        <td style="vertical-align: middle"><?php echo $dname?></td>
                                         <td style="vertical-align: middle"><?php echo $source?></td>
                                         <td style="vertical-align: middle"><?php echo $destination?></td>
                                         <td style="vertical-align: middle"><?php echo $startD?></td>
                                         <td style="vertical-align: middle"><?php echo $endD?></td>
                                         <td style="vertical-align: middle"><?php echo $mode?></td>
-                                        <td style="vertical-align: middle"><?php echo '₹ '.$cost?></td>
+                                        <td style="vertical-align: middle"><?php echo 'Rp '.$cost?></td>
+                                        <td style="vertical-align: middle"><?php echo ''.$phno?></td>
+                                        <td style="vertical-align: middle">
+<!--                                            <button class="btn-outline-info" placeholder="Some" value="car" name="book" type="button" data-toggle="modal" data-target="#staticBackdrop">Cancel this Ride</button>-->
+                                            <form method="post" action="complete.php" id="complete-form<?php echo $bid?>">
+                                                <?php $arr = [
+                                                    'bid' => $bid
+                                                ];
+                                                ?>
+                                                <input type="hidden" name="data" value="<?php echo htmlentities(serialize($arr)); ?>">
+                                                <input onclick="
+                                                    
+                                                        swal('complete Ride','Are U sure? you want to cancel this ride','info',{buttons: {
+                                                        cancel: 'No\, Don\'t Cancel',
+
+                                                        catch: {
+                                                        text: 'Yes\, Cancel Now',
+                                                        value: 'catch',
+                                                        },
+                                                        },closeOnClickOutside: false,
+                                                        },).then((value) => {
+                                                        switch (value) {
+                                                        case 'catch':
+                                                        swal('complete', 'Ride completed successfully', 'success');
+                                                        $('#complete-form<?php echo $bid?>').submit();
+                                                        break;
+
+                                                        default:
+                                                        swal('Ride not complete','','warning');
+                                                        }
+                                                        });"
+                                                       class="btn btn-primary" value="<?php echo 'Complete this booking';?>"
+                                                />
+                                            </form>
+                                        </td>
+                                        <td style="vertical-align: middle">
+<!--                                            <button class="btn-outline-info" placeholder="Some" value="car" name="book" type="button" data-toggle="modal" data-target="#staticBackdrop">Cancel this Ride</button>-->
+                                            <form method="post" action="cancel.php" id="cancel-form<?php echo $bid?>">
+                                                <?php $arr = [
+                                                    'bid' => $bid
+                                                ];
+                                                ?>
+                                                <input type="hidden" name="data" value="<?php echo htmlentities(serialize($arr)); ?>">
+                                                <input onclick="
+                                                    
+                                                        swal('Cancel Ride','Are U sure? you want to cancel this ride','info',{buttons: {
+                                                        cancel: 'No\, Don\'t Cancel',
+
+                                                        catch: {
+                                                        text: 'Yes\, Cancel Now',
+                                                        value: 'catch',
+                                                        },
+                                                        },closeOnClickOutside: false,
+                                                        },).then((value) => {
+                                                        switch (value) {
+                                                        case 'catch':
+                                                        swal('Canceled', 'Ride canceled successfully', 'success');
+                                                        $('#cancel-form<?php echo $bid?>').submit();
+                                                        break;
+
+                                                        default:
+                                                        swal('Ride not canceled','','warning');
+                                                        }
+                                                        });"
+                                                       class="btn btn-primary" value="<?php echo 'Cancel this booking';?>"
+                                                />
+                                            </form>
+                                            
+                                        </td>
                                     </tr>
                                     <!-- Button trigger modal -->
                                     <?php
@@ -442,6 +526,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     <tr>
                                         <th scope="col">Car</th>
                                         <th scope="col">Driver</th>
+                                        <th scope="col">Nama Driver</th>
                                         <th scope="col">Source</th>
                                         <th scope="col">Destination</th>
                                         <th scope="col">Pick up Date</th>
@@ -458,7 +543,7 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                 while ($row=mysqli_fetch_array($rejected_qr)){
                                     extract($row);
 //                            var_dump($row);
-                                    $driver_qr=mysqli_query($conn,"select dname,pic from driver where did=$did");
+                                    $driver_qr=mysqli_query($conn,"select dname,pic, phno from driver where did=$did");
                                     $user_qr=mysqli_query($conn,"select name,pic from user where uid=$uid");
                                     $car_qr=mysqli_query($conn,"select brand,cname,pic from car where cid=$cid");
                                     $driver=mysqli_fetch_array($driver_qr);
@@ -469,6 +554,8 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     $startD=date("d/m/y",strtotime($startdate));
                                     $endD=date("d/m/y",strtotime($enddate));
                                     $mode='';
+                                    $phno=$driver['phno'];
+                                    $dname=$driver['dname'];
                                     if($hire_type=='day'){
                                         $mode='Full Day';
                                     }
@@ -482,12 +569,13 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                                     <tr>
                                         <th scope="row"><img title="<?php echo $car['brand'].': '.$car['cname']?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 200px"></th>
                                         <th scope="row"><img title="<?php echo $driver['dname']?>" class="img-fluid rounded-circle" src="<?php echo $dpic?>" style="width: 100px"></th>
+                                        <td style="vertical-align: middle"><?php echo $dname?></td>
                                         <td style="vertical-align: middle"><?php echo $source?></td>
                                         <td style="vertical-align: middle"><?php echo $destination?></td>
                                         <td style="vertical-align: middle"><?php echo $startD?></td>
                                         <td style="vertical-align: middle"><?php echo $endD?></td>
                                         <td style="vertical-align: middle"><?php echo $mode?></td>
-                                        <td style="vertical-align: middle"><?php echo '₹ '.$cost?></td>
+                                        <td style="vertical-align: middle"><?php echo 'Rp '.$cost?></td>
                                     </tr>
                                     <!-- Button trigger modal -->
                                     <?php
@@ -523,6 +611,89 @@ $rejected_count = mysqli_num_rows($rejected_qr);
 
                     </div>
                     <?php
+                }
+                if($complete_count>0){
+                    ?>
+                    <div>
+                        <div class="container-fluid" style="padding-top: 50px;">
+                            <?php
+                            if(mysqli_num_rows($completed_qr)>0){
+                                ?> <h2  style="text-align: center;font-family: 'Lato', sans-serif;font-size: 50px;font-weight: 700;color: #0088ff;margin-bottom: 20px;">Your Completed Booking</h2> <?php
+                            }
+                            ?>
+                            <table class="table table-striped center table-warning table-bordered" style="font-size: large;font-weight: bold;text-align: center;">
+                                <?php
+                                if(mysqli_num_rows($completed_qr)){
+                                    ?>
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Car</th>
+                                        <th scope="col">Driver</th>
+                                        <th scope="col">Nama Driver</th>
+                                        <th scope="col">Source</th>
+                                        <th scope="col">Destination</th>
+                                        <th scope="col">Pick up Date</th>
+                                        <th scope="col">Drop off Date</th>
+                                        <th scope="col">Hire type</th>
+                                        <th scope="col" width="10%">Cost</th>
+                                        <th scope="col">Nomor Driver</th>
+                                    </tr>
+                                    </thead>
+                                    <?php
+                                }
+                                ?>
+                                <tbody>
+                                <?php
+                                while ($row=mysqli_fetch_array($completed_qr)){
+                                    extract($row);
+//                            var_dump($row);
+                                    $driver_qr=mysqli_query($conn,"select dname,pic, phno from driver where did=$did");
+                                    $user_qr=mysqli_query($conn,"select name,pic from user where uid=$uid");
+                                    $car_qr=mysqli_query($conn,"select brand,cname,pic from car where cid=$cid");
+                                    $driver=mysqli_fetch_array($driver_qr);
+                                    $user=mysqli_fetch_array($user_qr);
+                                    $car=mysqli_fetch_array($car_qr);
+                                    $dpic='../admin/'.$driver['pic'];
+                                    $cpic='../admin/'.$car['pic'];
+                                    $startD=date("d/m/y",strtotime($startdate));
+                                    $endD=date("d/m/y",strtotime($enddate));
+                                    $mode='';
+                                    $phno=$driver['phno'];
+                                    $dname=$driver['dname'];
+                                    if($hire_type=='day'){
+                                        $mode='Full Day';
+                                    }
+                                    else{
+                                        $mode='Release car on journey completion';
+                                    }
+//                            var_dump($driver);
+//                            var_dump($user);
+//                            echo $source;
+                                    ?>
+                                    <tr>
+                                        <th scope="row"><img title="<?php echo $car['brand'].': '.$car['cname']?>" class="img-fluid" src="<?php echo $cpic?>" style="width: 200px"></th>
+                                        <th scope="row"><img title="<?php echo $driver['dname']?>" class="img-fluid rounded-circle" src="<?php echo $dpic?>" style="width: 100px"></th>
+                                        <td style="vertical-align: middle"><?php echo $dname?></td>
+                                        <td style="vertical-align: middle"><?php echo $source?></td>
+                                        <td style="vertical-align: middle"><?php echo $destination?></td>
+                                        <td style="vertical-align: middle"><?php echo $startD?></td>
+                                        <td style="vertical-align: middle"><?php echo $endD?></td>
+                                        <td style="vertical-align: middle"><?php echo $mode?></td>
+                                        <td style="vertical-align: middle"><?php echo 'Rp '.$cost?></td>
+                                        <td style="vertical-align: middle"><?php echo $phno?></td>
+                                        
+                                    </tr>
+                                    <!-- Button trigger modal -->
+                                    <?php
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <?php
+
                 }
             }
             ?>

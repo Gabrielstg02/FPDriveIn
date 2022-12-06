@@ -470,7 +470,7 @@
                                 <td style="vertical-align: middle"><?php echo $row['registrationNo']?></td>
                                 <td style="vertical-align: middle"><a href="<?php echo $dview?>"><img class="img-fluid" src="<?php echo $dpic?>" style="width: 100px;height: 100px;" title="<?php echo 'ID:'.$did.': '.$dname;?>"></a></td>
                                 <td style="vertical-align: middle"><?php echo $dname?></td>
-                                <td style="vertical-align: middle"><?php echo '₹ '.$income.' Rupees'?></td>
+                                <td style="vertical-align: middle"><?php echo 'Rp '.$income.''?></td>
                             </tr>
                             <!-- Button trigger modal -->
                             <?php
@@ -502,7 +502,7 @@
                         ?>
                         </tbody>
                     </table>
-                    <h1 style="text-align: center">Total income: <?php echo $grand.' Rupees';?></h1>
+                    <h1 style="text-align: center">Total income: <?php echo $grand.'';?></h1>
                 </div>
 
             </div>

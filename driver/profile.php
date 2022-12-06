@@ -1,23 +1,27 @@
+<?php include('../php/connection.php'); ?>
+<?php if(isset($_SESSION['driver']))
+{
+    ?><script type="text/javascript">
+    window.location.href = "index.php";
+</script>
+    <?php
+} ?>
+
 <?php
-include ("../php/connection.php");
-if(!isset($_SESSION['user'])){
-    ?>
-    <script type="text/javascript"> window.location.href="user_login.php" </script><?php
-}
 //Profile view variables
 $today = date("Y-m-d");
-$dob=$_SESSION['user']['dob'];
-$diff = (date('Y') - date('Y',strtotime($dob)));
+// $dob=$_SESSION['driver']['age'];
+$diff = $profile['age'];
 //$age = format('%yYears, %mMonths, %dDays');
-$uid=$_SESSION['user']['uid'];
-$profile_qr=mysqli_query($conn,"select * from user where uid=$uid");
+$did=$_SESSION['driver']['did'];
+$profile_qr=mysqli_query($conn,"select * from driver where did=$did");
 $profile=mysqli_fetch_array($profile_qr);
-$name=$profile['name'];
-$email=$profile['email'];
+$dname=$profile['dname'];
+$address=$profile['address'];
 $gender=$profile['gender'];
 $number=$profile['phno'];
-$pic=$profile['pic'];
-$join=$_SESSION['user']['doj'];
+$lic=$profile['lic'];
+// $join=$_SESSION['user']['doj'];
 $imgpath='../'.$pic;
 
 //Booking Details
@@ -193,28 +197,28 @@ $rejected_count = mysqli_num_rows($rejected_qr);
                             <tbody>
                             <tr>
                                 <th scope="col">Name</th>
-                                <td><?php echo $name?></td>
+                                <td><?php echo $dname?></td>
                             </tr>
                             <tr class="table-dark" style="color: #8a6d0b">
                                 <th scope="row">Gender</th>
                                 <td><?php echo $gender?></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <th scope="row">Date of Birth</th>
                                 <td><?php echo $dob?></td>
-                            </tr>
+                            </tr> -->
                             <tr class="table-dark" style="color: #8a6d0b">
                                 <th scope="row">Age</th>
                                 <td><?php echo $diff?></td>
                             </tr>
                             <tr>
-                                <th scope="row">Email</th>
-                                <td><?php echo $email?></td>
+                                <th scope="row">PhoneNumber</th>
+                                <td><?php echo $phno?></td>
                             </tr>
-                            <tr class="table-dark" style="color: #8a6d0b">
+                            <!-- <tr class="table-dark" style="color: #8a6d0b">
                                 <th scope="row">Phone Number</th>
                                 <td><?php echo $number?></td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <th scope="row">Joining</th>
                                 <td><?php echo $join?></td>

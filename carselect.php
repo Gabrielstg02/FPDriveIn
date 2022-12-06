@@ -263,17 +263,17 @@ if(isset($_SESSION['user'])){
                     ?>
                     <thead class="thead-dark" style="font-size: small">
                     <tr>
-                        <th scope="col" width="10%">Car Photo</th>
-                        <th scope="col">Car Brand</th>
-                        <th scope="col">Car Model Name</th>
-                        <th scope="col">Car Type</th>
-                        <th scope="col">Car Color</th>
-                        <th scope="col" width="7%">Car Driver</th>
-                        <th scope="col">Passenger Capacity</th>
-                        <th scope="col" width="5%">Rate per Km</th>
-                        <th scope="col" width="10%">Rate per Day</th>
-                        <th scope="col" width="10%">Total Cost</th>
-                        <th scope="col" width="10%">Request for Booking</th>
+                        <th scope="col" width="10%">Foto Mobil</th>
+                        <th scope="col">Merk Mobil</th>
+                        <th scope="col">Model Mobil</th>
+                        <th scope="col">Tipe Mobil</th>
+                        <th scope="col">Warna Mobil</th>
+                        <th scope="col" width="7%">Driver</th>
+                        <th scope="col">Kapasitas Penumpang</th>
+                        <th scope="col" width="5%">Harga per Km</th>
+                        <th scope="col" width="10%">Harga per Hari</th>
+                        <th scope="col" width="10%">Total Harga</th>
+                        <th scope="col" width="10%">Pesan</th>
                     </tr>
                     </thead>
             <?php
@@ -311,13 +311,13 @@ if(isset($_SESSION['user'])){
                 <td style="vertical-align: middle"><?php echo $row['ccolor']?></td>
                 <td style="vertical-align: middle"><a href="<?php echo $dview?>"><img title="<?php echo $dname?>" class="img-fluid rounded-circle" src="<?php echo $dpic?>" style="width: 100px;height: 100px;" title="<?php echo $dname;?>"></a></td>
                 <td style="vertical-align: middle"><?php echo $row['cseat']?></td>
-                <td style="vertical-align: middle"><?php echo '₹ '.$row['farepkm']?></td>
-                <td style="vertical-align: middle"><?php echo '₹ '.$row['farepd']?></td>
-                <td style="vertical-align: middle"><?php echo '₹ '.$cost?></td>
+                <td style="vertical-align: middle"><?php echo 'Rp '.$row['farepkm']?></td>
+                <td style="vertical-align: middle"><?php echo 'Rp '.$row['farepd']?></td>
+                <td style="vertical-align: middle"><?php echo 'Rp '.$cost?></td>
                 <td style="vertical-align: middle">
 <!--                    <button data-whatever="abc" class="btn-outline-info btn btn-primary" type="button" data-toggle="modal" data-target="#staticBackdrop">Book This Car</button>-->
 <!--                    <button type="button" onclick="swal('Confirm Booking','Are U sure? you want to book this car','info')" class="btn-outline-info btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" data-whatever="@getbootstrap">Book This Car</button>-->
-                    <form method="post" action="book.php" id="bokking-form<?php echo $cid?>">
+                    <form method="post" action="book.php" id="bokking-form<?php echo $cid?>" enctype="multipart/form-data">
                         <?php $arr = [
                             'cid' => $cid,
                             'did' =>$did,
@@ -330,11 +330,12 @@ if(isset($_SESSION['user'])){
                             'rid' => $rid
                         ];
                         ?>
+                        <input type="file" name="paymentfile" id="paymentfile">
                         <input type="hidden" name="data" value="<?php echo htmlentities(serialize($arr)); ?>">
                         <input style="font-size: medium" onclick="
-                        swal('Confirm Booking','Are U sure? you want to book this car','info',{buttons: {
+                        swal('Confirm Booking','Apakah Anda yakin? you want to book this car','info',{buttons: {
                             cancel: 'No\, Don\'t Book',
-
+                            
                             catch: {
                                 text: 'Yes\, Book Now',
                                 value: 'catch',
@@ -363,6 +364,40 @@ if(isset($_SESSION['user'])){
             </tbody>
         </table>
     </div>
+
+    <center>
+        <h3>Transfer Uang Pembayaran ke Rekening dibawah</h3>
+        <img src="assets/img/about/rekening.png" alt="asdfasd">
+    </center>
+        <!-- extract($_POST);
+        if(!empty($_FILES['pic']['name']))
+                            {
+                                $file_name = $_FILES['pic']['name']; // orginal file name
+                                $file_size = $_FILES['pic']['size']; // bytes (by default the limit of file upload is set to 2 MB (modify php.ini to increase))
+                                $file_type = $_FILES['pic']['type']; // media type
+                                $file_error = $_FILES['pic']['error']; // file error
+                                $file_tmp_name = $_FILES['pic']['tmp_name']; // file temp path
+
+                                //  $date = date('d-m-Y');
+                                $destination_pic = "uploaded/users/".date('d-m-Y_H-i-sa').$_FILES['pic']['name'];
+
+                                // check if file type is jpg/png
+                                if($file_type=="image/jpg" || $file_type=="image/png" || $file_type=="image/JPG" || $file_type=="image/jpeg" || $file_type=="image/JPEG" || $file_type=="image/PNG")
+                                {
+                                    # upload the file
+                                    if(!move_uploaded_file($file_tmp_name, "../".$destination_pic)){
+                                        echo "File error ".$file_error;
+                                    }
+//                                else{
+//                                    echo "Files uploaded successfully";
+//                                }
+                                }
+                                else
+                                {
+                                    echo "Invalid Image file, please upload jpg,png file only";
+                                    exit;
+                                }
+
 
     <footer>
         <!-- Footer Start-->

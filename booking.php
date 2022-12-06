@@ -130,8 +130,8 @@ if(isset($_SESSION['user'])){
             </div>
         </div>
         <!-- slider Area End-->
-<!--Booking start-->
-        <div class="booking-area">
+<!-- Booking Room Start-->
+<div class="booking-area">
             <div class="container">
                 <div class="row ">
                     <div class="col-12">
@@ -142,15 +142,17 @@ if(isset($_SESSION['user'])){
                                 <div class="single-select-box mb-30 mr-30">
                                     <!-- select out date -->
                                     <div class="boking-tittle">
-                                        <span> Asal:</span>
+                                        <span> Asal: </span>
                                     </div>
                                     <div class="boking-datepicker">
-                                        <select id="source" name="source">
-                                            <option value="" selected>Select Source</option>
-                                                <?php while($row=mysqli_fetch_array($routes)){
-                                                    ?><option value="<?php echo $row[0] ?>"> <?php echo $row[0] ?></option><?php
-                                                }
-                                                ?>
+                                        <select id="source" name="source" required>
+                                            <option value="" selected>Pilih Asal</option>
+                                            <?php
+                                            $routes=mysqli_query($conn,"SELECT source FROM route UNION SELECT destination FROM route");
+                                            while($row=mysqli_fetch_array($routes)){
+                                                ?><option value="<?php echo $row[0] ?>"> <?php echo $row[0] ?></option><?php
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -162,10 +164,10 @@ if(isset($_SESSION['user'])){
                                     </div>
                                     <div class="boking-datepicker">
                                         <select id="destination" name="destination">
-                                            <option value="" selected>Select Destination</option>
+                                            <option value="" selected>Pilih Tujuan:</option>
                                             <?php
-                                                $routes=mysqli_query($conn,"SELECT source FROM route UNION SELECT destination FROM route");
-                                                while($row=mysqli_fetch_array($routes)){
+                                            $routes=mysqli_query($conn,"SELECT source FROM route UNION SELECT destination FROM route");
+                                            while($row=mysqli_fetch_array($routes)){
                                                 ?><option value="<?php echo $row[0] ?>"> <?php echo $row[0] ?></option><?php
                                             }
                                             ?>
@@ -175,7 +177,7 @@ if(isset($_SESSION['user'])){
                                 <!-- Single Select Box -->
                                 <div class="single-select-box mb-30 mr-30 ml-30">
                                     <div class="boking-tittle">
-                                        <span>Pick-up Date:</span>
+                                        <span>Tanggal Mulai:</span>
                                     </div>
                                     <div class="select-this">
                                         <input id="datepicker1" name="startDate" placeholder="dd/mm/yy" required/>
@@ -184,7 +186,7 @@ if(isset($_SESSION['user'])){
                                 <!-- Single Select Box -->
                                 <div class="single-select-box mb-30 mr-60 ml-30">
                                     <div class="boking-tittle">
-                                        <span>Drop-off Date:</span>
+                                        <span>Tanggal Akhir:</span>
                                     </div>
                                     <div class="select-this">
                                         <input id="datepicker2" name="endDate" placeholder="dd/mm/yy" required/>
@@ -202,12 +204,12 @@ if(isset($_SESSION['user'])){
                                 <!-- Single Select Box -->
                                 <div class="single-select-box mb-30 mr-100">
                                     <div class="boking-tittle">
-                                        <span>Head Count:</span>
+                                        <span>Jumlah Penumpang:</span>
                                     </div>
                                     <div class="select-this">
                                         <select class="scrollable-menu" id="source" name="headCount">
-                                            <option value="" selected>Select Number of people (Passenger)</option>
-                                            <?php foreach (range(1,16) as $num){
+                                            <option value="" selected>Pilih Jumlah Penumpang</option>
+                                            <?php foreach (range(1,8) as $num){
                                                 ?><option value="<?php echo $num ?>"> <?php echo $num ?></option><?php
                                             }
                                             ?>
@@ -218,13 +220,13 @@ if(isset($_SESSION['user'])){
                                 <div class="single-select-box mb-30">
                                     <!-- select out date -->
                                     <div class="boking-tittle">
-                                        <span>Required Car Category:</span>
+                                        <span>Kategory Mobil:</span>
                                     </div>
                                     <div class="boking-datepicker">
-                                        <select id="type" name="type">
-                                            <option value="" selected>Select Car Type</option>
-                                            <option value="Commercial">Commercial</option>
-                                            <option value="Private">Private</option>
+                                        <select id="type" name="type" required>
+                                            <option value="" selected>Pilih Tipe Mobil</option>
+                                            <option value="Commercial">Komersial</option>
+                                            <option value="Private">Privat</option>
                                         </select>
                                     </div>
                                 </div>
@@ -232,32 +234,30 @@ if(isset($_SESSION['user'])){
                                 <div class="single-select-box mb-30">
                                     <!-- select out date -->
                                     <div class="boking-tittle">
-                                        <span>Release type:
+                                        <span>Type pengembalian:
                                         <i data-toggle="tooltip" data-placement="top" title="Choose whole day if you wish to book the car for the whole day otherwise choose 'Release after journey completion' if you going to release the car just after reaching your destination" class="fas fa-question-circle"></i>
                                         </span>
                                     </div>
                                     <div class="boking-datepicker">
                                         <select id="type" name="mode">
-                                            <option value="" selected>Select Drop off service duration</option>
-                                            <option value="day">Whole Day</option>
-                                            <option value="noday">Release after journey completion</option>
+                                            <option value="" selected>Pilih Tipe Pengembalian</option>
+                                            <option value="day">Seharian</option>
+                                            <option value="noday">Dikembalikan Setelah Dipakai</option>
                                         </select>
                                     </div>
                                 </div>
                                 <!-- Single Select Box -->
                                 <div class="single-select-box pt-45 mb-30">
-                                    <input type="submit" name="search" value="Search" class="btn select-btn">
-<!--                                    <a href="#" type="submit" class="btn select-btn" name="search" >Book Now</a>-->
+                                    <input type="submit" name="search" value="Cari" class="btn select-btn">
+                                    <!--                                    <a href="#" type="submit" class="btn select-btn" name="search" >Book Now</a>-->
                                 </div>
-
-
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-<!--Booking end-->
+        <!-- Booking Room End-->
 <!--        &lt;!&ndash; Dining Start &ndash;&gt;-->
 <!--        <div class="dining-area dining-padding-top">-->
 <!--            &lt;!&ndash; Single Left img &ndash;&gt;-->
